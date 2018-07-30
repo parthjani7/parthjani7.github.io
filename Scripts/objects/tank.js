@@ -17,7 +17,7 @@ var objects;
             var _this = _super.call(this, "tank_small") || this;
             _this.x = config.Screen.WIDTH - _this.width;
             _this.y = config.Screen.HEIGHT - _this.height - 50;
-            _this._bullet = new objects.Bullet();
+            _this._bullets = new Array();
             _this.isFired = false;
             _this.Start();
             return _this;
@@ -31,28 +31,34 @@ var objects;
         // public methods
         Tank.prototype.Start = function () {
             //this._verticalSpeed = 1.2; // the tank will move down 5ppf
-            this._horizontalSpeed = this.getRandomSpeed(10, 15); // the tank will move down 5ppf
+            this._horizontalSpeed = this.getRandomSpeed(10, 15) / 10; // the tank will move down 5ppf
             console.info(this._horizontalSpeed);
         };
         Tank.prototype.Update = function () {
             this.x -= this._horizontalSpeed;
             this._checkBounds();
-            if (this.isFired) {
-                this._bullet.Update();
-            }
+            // if(this.isFired){
+            //   this._bullets.forEach(bullet => {
+            //     bullet.Update();
+            //   });
+            // }
         };
-        Tank.prototype.Fire = function (bullet) {
-            console.log("fired");
-            this._bullet = bullet;
-            this._bullet.setCord(this.x, this.y);
-            this._bullet.isShooting = true;
-        };
+        // public Fire(bullets:Array<objects.Bullet>):void {
+        //   // console.log("fired");
+        //   // console.log(bullets);
+        //     for(var i=0;i<bullets.length;i++){
+        //       this._bullets[i]=bullets[i];
+        //       this._bullets[i].setCord(this.x,this.y);
+        //       this._bullets[i].isShooting=true;
+        //     }
+        //     this.isFired=true;
+        // }
         Tank.prototype.Reset = function () {
-            this._horizontalSpeed = this.getRandomSpeed(10, 15);
+            this._horizontalSpeed = this.getRandomSpeed(10, 15) / 10;
             this.x = config.Screen.WIDTH;
         };
         Tank.prototype.getRandomSpeed = function (min, max) {
-            var speed = (Math.floor(Math.random() * (max - min + 1)) + min) / 10;
+            var speed = (Math.floor(Math.random() * (max - min + 1)) + min);
             console.info("speed " + speed);
             return speed;
             //return .1

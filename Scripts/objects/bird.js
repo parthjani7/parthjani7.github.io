@@ -46,14 +46,13 @@ var objects;
                 this.moveUp();
             if (managers.Keyboard.keyDown)
                 this.moveDown();
-            //managers.Keyboard.keyUp=managers.Keyboard.keyDown=false;
         };
         Bird.prototype.moveUp = function () {
-            console.info("moved up");
+            //console.info("moved up");
             this.y -= 2;
         };
         Bird.prototype.moveDown = function () {
-            console.info("moved down");
+            //console.info("moved down");
             this.y += 2;
         };
         Bird.prototype.Reset = function () {

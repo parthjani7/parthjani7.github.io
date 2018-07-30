@@ -6,9 +6,8 @@ module scenes {
         private _tanks:objects.Tank[];
          private _bullets:objects.Bullet[];
         private _pauseButton:objects.Button;
-
+        
         private _isPaused:boolean;
-        private isBulletFire:boolean;
 
         // constructors
         constructor() {
@@ -16,23 +15,6 @@ module scenes {
             this._isPaused=false;
             window.onkeydown = this.keydown;
             this.Start();
-        }
-
-
-        // private KeyUp(event):void {
-        //   console.info("clicked up");
-        //   //var keyCode =  event.keyCode;
-        // }
-        // private KeyDown(event):void {
-        //   console.info("clicked down");
-        // }
-
-        // private methods
-        private _buildTanks(tankNum):void {
-            for (let count = 0; count < tankNum; count++) {
-                this._tanks.push(new objects.Tank());
-                 this._bullets.push(new objects.Bullet());
-            }
         }
 
         // public methods
@@ -55,23 +37,40 @@ module scenes {
              this._bullets=new Array<objects.Bullet>();
 
             this._buildTanks(3);
-
+            managers.Shooting.isShooting=true;
             this.Main();
         }
 
+        private _buildTanks(tankNum):void {
+            for (let count = 0; count < tankNum; count++) {
+                this._tanks.push(new objects.Tank());
+                this._bullets.push(new objects.Bullet());
+            }
+        }
+
         public Update():void {
+
           if(!this._isPaused){
             this._bird.Update();
             this._background.Update();
 
-            this._tanks.forEach(tank => {
-                tank.Update();
-                if(managers.Collision.check(tank,this._bird)){
+            for(var i=0;i<this._tanks.length;i++){
+                if(this._tanks[i].x > 0 && managers.Shooting.isShooting && this._bullets[i].isShooting==false){
+                    this._bullets[i].setCord(this._tanks[i].x,this._tanks[i].y);
+                    this._bullets[i].y=this._tanks[i].y;
+                    this._bullets[i].Fire();
+                }else{
+        
+                }
+
+                this._tanks[i].Update();
+                if(managers.Collision.check(this._tanks[i],this._bird)){
                   console.info("collision tank bird");
                   this._isPaused=true;
                 }
-            });
+            }
 
+            managers.Shooting.isShooting=false;
             this._bullets.forEach(bullet => {
                 bullet.Update();
                 if(managers.Collision.check(bullet,this._bird)){
@@ -112,34 +111,20 @@ module scenes {
             this._backButton.on("click", function(){
                 this.backToMenu();
             }, this);
+            
 
-            this._bird.on("click", function(){
-              for(let i=0;i<this._tanks.length;i++){
-                this._tanks[i].Fire(this._bullets[i]);
-              }
-              // this._tanks.forEach(tank => {
-              //
-              // });
-            }, this);
+            // this._bird.on("click", function(){
+            //   for(let i=0;i<this._tanks.length;i++){
+            //     this._tanks[i].Fire(this._bullets[i]);
+            //   }
+            //   // this._tanks.forEach(tank => {
+            //   //
+            //   // });
+            // }, this);
 
             this._pauseButton.on("click", function(){
                 this.Pause();
             }, this);
-
-
-            // window.addEventListener('keydown', function(event) {
-            //
-            //   // switch(event.keyCode){
-            //   //   case 38:
-            //   //     this._bird.moveDown();
-            //   //     break;
-            //   //   case 40:
-            //   //     this._bird.moveDown();
-            //   //     break;
-            //   // }
-            // }, this);
-
-
 
             // add the Bird object to the scene
             this.addChild(this._bird);
@@ -150,6 +135,7 @@ module scenes {
             for (const bullet of this._bullets) {
                 this.addChild(bullet);
             }
+            
             //this.addChild(this._bullet);
         }
 

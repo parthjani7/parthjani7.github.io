@@ -42,16 +42,15 @@ module objects {
             this.moveUp();
           if(managers.Keyboard.keyDown)
             this.moveDown();
-          //managers.Keyboard.keyUp=managers.Keyboard.keyDown=false;
         }
 
         public moveUp():void {
-          console.info("moved up");
+          //console.info("moved up");
           this.y-=2;
         }
 
         public moveDown():void {
-          console.info("moved down");
+          //console.info("moved down");
           this.y+=2;
         }
 

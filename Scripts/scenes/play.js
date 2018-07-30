@@ -20,20 +20,6 @@ var scenes;
             _this.Start();
             return _this;
         }
-        // private KeyUp(event):void {
-        //   console.info("clicked up");
-        //   //var keyCode =  event.keyCode;
-        // }
-        // private KeyDown(event):void {
-        //   console.info("clicked down");
-        // }
-        // private methods
-        Play.prototype._buildTanks = function (tankNum) {
-            for (var count = 0; count < tankNum; count++) {
-                this._tanks.push(new objects.Tank());
-                this._bullets.push(new objects.Bullet());
-            }
-        };
         // public methods
         Play.prototype.Start = function () {
             this._bird = new objects.Bird();
@@ -48,20 +34,35 @@ var scenes;
             //Bullets
             this._bullets = new Array();
             this._buildTanks(3);
+            managers.Shooting.isShooting = true;
             this.Main();
+        };
+        Play.prototype._buildTanks = function (tankNum) {
+            for (var count = 0; count < tankNum; count++) {
+                this._tanks.push(new objects.Tank());
+                this._bullets.push(new objects.Bullet());
+            }
         };
         Play.prototype.Update = function () {
             var _this = this;
             if (!this._isPaused) {
                 this._bird.Update();
                 this._background.Update();
-                this._tanks.forEach(function (tank) {
-                    tank.Update();
-                    if (managers.Collision.check(tank, _this._bird)) {
-                        console.info("collision tank bird");
-                        _this._isPaused = true;
+                for (var i = 0; i < this._tanks.length; i++) {
+                    if (this._tanks[i].x > 0 && managers.Shooting.isShooting && this._bullets[i].isShooting == false) {
+                        this._bullets[i].setCord(this._tanks[i].x, this._tanks[i].y);
+                        this._bullets[i].y = this._tanks[i].y;
+                        this._bullets[i].Fire();
                     }
-                });
+                    else {
+                    }
+                    this._tanks[i].Update();
+                    if (managers.Collision.check(this._tanks[i], this._bird)) {
+                        console.info("collision tank bird");
+                        this._isPaused = true;
+                    }
+                }
+                managers.Shooting.isShooting = false;
                 this._bullets.forEach(function (bullet) {
                     bullet.Update();
                     if (managers.Collision.check(bullet, _this._bird)) {
@@ -94,28 +95,17 @@ var scenes;
             this._backButton.on("click", function () {
                 this.backToMenu();
             }, this);
-            this._bird.on("click", function () {
-                for (var i = 0; i < this._tanks.length; i++) {
-                    this._tanks[i].Fire(this._bullets[i]);
-                }
-                // this._tanks.forEach(tank => {
-                //
-                // });
-            }, this);
+            // this._bird.on("click", function(){
+            //   for(let i=0;i<this._tanks.length;i++){
+            //     this._tanks[i].Fire(this._bullets[i]);
+            //   }
+            //   // this._tanks.forEach(tank => {
+            //   //
+            //   // });
+            // }, this);
             this._pauseButton.on("click", function () {
                 this.Pause();
             }, this);
-            // window.addEventListener('keydown', function(event) {
-            //
-            //   // switch(event.keyCode){
-            //   //   case 38:
-            //   //     this._bird.moveDown();
-            //   //     break;
-            //   //   case 40:
-            //   //     this._bird.moveDown();
-            //   //     break;
-            //   // }
-            // }, this);
             // add the Bird object to the scene
             this.addChild(this._bird);
             for (var _i = 0, _a = this._tanks; _i < _a.length; _i++) {

@@ -2,7 +2,7 @@ module objects {
     export class Tank extends objects.GameObject {
         // member variables
         private _horizontalSpeed:number;
-        private _bullet:objects.Bullet;
+        private _bullets:Array<objects.Bullet>;
         private isFired:boolean;
 
 
@@ -11,7 +11,7 @@ module objects {
             super("tank_small");
             this.x=config.Screen.WIDTH-this.width;
             this.y=config.Screen.HEIGHT-this.height-50;
-            this._bullet=new objects.Bullet();
+            this._bullets=new Array<objects.Bullet>();
             this.isFired=false;
             this.Start();
         }
@@ -26,31 +26,38 @@ module objects {
          // public methods
          public Start():void {
            //this._verticalSpeed = 1.2; // the tank will move down 5ppf
-           this._horizontalSpeed = this.getRandomSpeed(10,15); // the tank will move down 5ppf
+           this._horizontalSpeed = this.getRandomSpeed(10,15)/10; // the tank will move down 5ppf
            console.info(this._horizontalSpeed);
       }
 
         public Update():void {
           this.x -= this._horizontalSpeed;
           this._checkBounds();
-          if(this.isFired){
-            this._bullet.Update();
-          }
+          // if(this.isFired){
+          //   this._bullets.forEach(bullet => {
+          //     bullet.Update();
+          //   });
+            
+          // }
         }
 
-        public Fire(bullet:objects.Bullet):void {
-          console.log("fired");
-          this._bullet=bullet;
-          this._bullet.setCord(this.x,this.y);
-          this._bullet.isShooting=true;
-        }
+        // public Fire(bullets:Array<objects.Bullet>):void {
+        //   // console.log("fired");
+        //   // console.log(bullets);
+        //     for(var i=0;i<bullets.length;i++){
+        //       this._bullets[i]=bullets[i];
+        //       this._bullets[i].setCord(this.x,this.y);
+        //       this._bullets[i].isShooting=true;
+        //     }
+        //     this.isFired=true;
+        // }
 
         public Reset():void {
-          this._horizontalSpeed = this.getRandomSpeed(10,15);
+          this._horizontalSpeed = this.getRandomSpeed(10,15)/10;
           this.x = config.Screen.WIDTH;
         }
         public getRandomSpeed(min,max){
-          var speed=(Math.floor(Math.random() * (max - min + 1)) + min)/10;
+          var speed=(Math.floor(Math.random() * (max - min + 1)) + min);
           console.info("speed "+speed);
           return speed;
           //return .1
