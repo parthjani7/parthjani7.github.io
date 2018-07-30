@@ -3,11 +3,16 @@ module objects {
         // member variables
         private _horizontalSpeed:number;
         public isShooting=false;
+        public targetX;
+        public targetY;
+        public angle;
         // constructors
 
         constructor() {
             super("bullet");
+            this.rotation=-60;
             this.Reset();
+            this.targetX=this.targetY=this.angle=0;
         }
 
         private _checkBounds():void {
@@ -17,24 +22,30 @@ module objects {
         }
 
         public Start():void {
-          //this._verticalSpeed = 1.2; // the tank will move down 5ppf
-          this._horizontalSpeed = this.getRandomSpeed(10,15); // the tank will move down 5ppf
-          //console.info(this._horizontalSpeed);
+          this._horizontalSpeed = this.getRandomSpeed(10,15);
         }
 
 
         public Update():void {
+          var velocityX = Math.cos((this.angle) * Math.PI / 180) * (this._horizontalSpeed * 2.5);
+          var velocityY = Math.sin((this.angle) * Math.PI / 180) * (this._horizontalSpeed * 2.5);
           if(this.isShooting){
-            this.x -= this._horizontalSpeed;
-            this.x -= this._horizontalSpeed;
-            this.y -= this._horizontalSpeed;
-            //console.log(this.x+" "+this.y);
+            this.x += velocityX;
+            this.y += velocityY;
             this._checkBounds();
           }
         }
 
-        public Fire():void {
+        public setTargetXY(x,y):void{
+          this.targetX=x;
+          this.targetY=y;
+          this.angle = (Math.atan2(this.targetY - this.y, this.targetX - this.x ))* (180/Math.PI);
+        }
+
+        public Fire(x,y):void {
+          this.setTargetXY(x,y);
           this.isShooting=true;
+          createjs.Sound.play("gun");
         }
 
         public setCord(x,y):void {
@@ -44,7 +55,6 @@ module objects {
         }
 
         public Reset():void {
-          //this._horizontalSpeed = this.getRandomSpeed(10,15);
           this.x = config.Screen.WIDTH+10;
           this.y =  config.Screen.WIDTH+10;
           this.isShooting=false;
@@ -52,10 +62,9 @@ module objects {
         }
 
         public getRandomSpeed(min,max){
-          var speed=(Math.floor(Math.random() * (max - min + 1)) + min)/5;
-          console.info("speed "+speed);
+          var speed=(Math.floor(Math.random() * (max - min + 1)) + min)/6;
           return speed;
-          //return .1
         }
+
     }
 }

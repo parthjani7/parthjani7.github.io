@@ -25,6 +25,7 @@
         { id: "button_click", src: "/Assets/audio/button_click.mp3" },
         { id: "mouseover", src: "/Assets/audio/mouseover1.mp3" },
         { id: "menu_background", src: "/Assets/audio/instruction_background.wav" },
+        { id: "gun", src: "/Assets/audio/gun.wav" },
     ];
     function Init() {
         console.log("%c Assets Loading...", "font-weight:bold; font-size:20px; color: green;");

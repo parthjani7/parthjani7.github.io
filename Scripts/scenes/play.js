@@ -49,12 +49,12 @@ var scenes;
                 this._bird.Update();
                 this._background.Update();
                 for (var i = 0; i < this._tanks.length; i++) {
-                    if (this._tanks[i].x > 0 && managers.Shooting.isShooting && this._bullets[i].isShooting == false) {
+                    if (this._tanks[i].x > 300 && managers.Shooting.isShooting && this._bullets[i].isShooting == false) {
+                        //if(this._tanks[i].x > 0 && managers.Shooting.isShooting && this._bullets[i].isShooting==false){
                         this._bullets[i].setCord(this._tanks[i].x, this._tanks[i].y);
                         this._bullets[i].y = this._tanks[i].y;
-                        this._bullets[i].Fire();
-                    }
-                    else {
+                        this._bullets[i].Fire(this._bird.x, this._bird.y);
+                        console.info("fired");
                     }
                     this._tanks[i].Update();
                     if (managers.Collision.check(this._tanks[i], this._bird)) {

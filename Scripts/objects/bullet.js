@@ -16,7 +16,9 @@ var objects;
         function Bullet() {
             var _this = _super.call(this, "bullet") || this;
             _this.isShooting = false;
+            _this.rotation = -60;
             _this.Reset();
+            _this.targetX = _this.targetY = _this.angle = 0;
             return _this;
         }
         Bullet.prototype._checkBounds = function () {
@@ -25,21 +27,26 @@ var objects;
             }
         };
         Bullet.prototype.Start = function () {
-            //this._verticalSpeed = 1.2; // the tank will move down 5ppf
-            this._horizontalSpeed = this.getRandomSpeed(10, 15); // the tank will move down 5ppf
-            //console.info(this._horizontalSpeed);
+            this._horizontalSpeed = this.getRandomSpeed(10, 15);
         };
         Bullet.prototype.Update = function () {
+            var velocityX = Math.cos((this.angle) * Math.PI / 180) * (this._horizontalSpeed * 2.5);
+            var velocityY = Math.sin((this.angle) * Math.PI / 180) * (this._horizontalSpeed * 2.5);
             if (this.isShooting) {
-                this.x -= this._horizontalSpeed;
-                this.x -= this._horizontalSpeed;
-                this.y -= this._horizontalSpeed;
-                //console.log(this.x+" "+this.y);
+                this.x += velocityX;
+                this.y += velocityY;
                 this._checkBounds();
             }
         };
-        Bullet.prototype.Fire = function () {
+        Bullet.prototype.setTargetXY = function (x, y) {
+            this.targetX = x;
+            this.targetY = y;
+            this.angle = (Math.atan2(this.targetY - this.y, this.targetX - this.x)) * (180 / Math.PI);
+        };
+        Bullet.prototype.Fire = function (x, y) {
+            this.setTargetXY(x, y);
             this.isShooting = true;
+            createjs.Sound.play("gun");
         };
         Bullet.prototype.setCord = function (x, y) {
             this.x = x;
@@ -47,17 +54,14 @@ var objects;
             this._horizontalSpeed = this.getRandomSpeed(10, 15);
         };
         Bullet.prototype.Reset = function () {
-            //this._horizontalSpeed = this.getRandomSpeed(10,15);
             this.x = config.Screen.WIDTH + 10;
             this.y = config.Screen.WIDTH + 10;
             this.isShooting = false;
             managers.Shooting.isShooting = true;
         };
         Bullet.prototype.getRandomSpeed = function (min, max) {
-            var speed = (Math.floor(Math.random() * (max - min + 1)) + min) / 5;
-            console.info("speed " + speed);
+            var speed = (Math.floor(Math.random() * (max - min + 1)) + min) / 6;
             return speed;
-            //return .1
         };
         return Bullet;
     }(objects.GameObject));
