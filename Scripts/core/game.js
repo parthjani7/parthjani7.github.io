@@ -8,24 +8,23 @@
     var CurrentScene;
     var CurrentState;
     var Manifest = [
+        { id: "background", src: "/Assets/images/background/image1.png" },
         { id: "PlayButton", src: "/Assets/images/buttons/play.png" },
         { id: "SettingButton", src: "/Assets/images/buttons/setting.png" },
         { id: "InstructionButton", src: "/Assets/images/buttons/question.png" },
         { id: "AboutButton", src: "/Assets/images/buttons/info.png" },
         { id: "ExitButton", src: "/Assets/images/buttons/close.png" },
-        { id: "bird", src: "/Assets/images/characters/bird3.png" },
-        { id: "tank", src: "/Assets/images/characters/tank.jpg" },
-        { id: "tank_small", src: "/Assets/images/characters/tank_small.png" },
-        { id: "background", src: "/Assets/images/background/image1.png" },
-        { id: "menu_background_img", src: "/Assets/images/background/image3.png" },
         { id: "BackButton", src: "/Assets/images/buttons/back.png" },
         { id: "SoundOnButton", src: "/Assets/images/buttons/sound_on.png" },
         { id: "SoundOffButton", src: "/Assets/images/buttons/sound_off.png" },
         { id: "PauseButton", src: "/Assets/images/buttons/pause.png" },
+        { id: "bird", src: "/Assets/images/characters/bird3.png" },
+        { id: "tank", src: "/Assets/images/characters/tank.jpg" },
+        { id: "tank_small", src: "/Assets/images/characters/tank_small.png" },
+        { id: "bullet", src: "/Assets/images/bullet.png" },
         { id: "button_click", src: "/Assets/audio/button_click.mp3" },
         { id: "mouseover", src: "/Assets/audio/mouseover1.mp3" },
         { id: "menu_background", src: "/Assets/audio/instruction_background.wav" },
-        { id: "bullet", src: "/Assets/images/bullet.png" },
     ];
     function Init() {
         console.log("%c Assets Loading...", "font-weight:bold; font-size:20px; color: green;");

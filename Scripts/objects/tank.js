@@ -17,6 +17,8 @@ var objects;
             var _this = _super.call(this, "tank_small") || this;
             _this.x = config.Screen.WIDTH - _this.width;
             _this.y = config.Screen.HEIGHT - _this.height - 50;
+            _this._bullet = new objects.Bullet();
+            _this.isFired = false;
             _this.Start();
             return _this;
         }
@@ -35,6 +37,15 @@ var objects;
         Tank.prototype.Update = function () {
             this.x -= this._horizontalSpeed;
             this._checkBounds();
+            if (this.isFired) {
+                this._bullet.Update();
+            }
+        };
+        Tank.prototype.Fire = function (bullet) {
+            console.log("fired");
+            this._bullet = bullet;
+            this._bullet.setCord(this.x, this.y);
+            this._bullet.isShooting = true;
         };
         Tank.prototype.Reset = function () {
             this._horizontalSpeed = this.getRandomSpeed(10, 15);

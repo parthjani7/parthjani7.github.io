@@ -31,6 +31,7 @@ var scenes;
         Play.prototype._buildTanks = function (tankNum) {
             for (var count = 0; count < tankNum; count++) {
                 this._tanks.push(new objects.Tank());
+                this._bullets.push(new objects.Bullet());
             }
         };
         // public methods
@@ -44,6 +45,8 @@ var scenes;
             this._pauseButton = new objects.Button("PauseButton", config.Screen.WIDTH - 120, config.Screen.HEIGHT - config.Screen.HEIGHT + 50, true);
             // create an empty Array List-like object of clouds
             this._tanks = new Array();
+            //Bullets
+            this._bullets = new Array();
             this._buildTanks(3);
             this.Main();
         };
@@ -55,7 +58,14 @@ var scenes;
                 this._tanks.forEach(function (tank) {
                     tank.Update();
                     if (managers.Collision.check(tank, _this._bird)) {
-                        console.info("collision");
+                        console.info("collision tank bird");
+                        _this._isPaused = true;
+                    }
+                });
+                this._bullets.forEach(function (bullet) {
+                    bullet.Update();
+                    if (managers.Collision.check(bullet, _this._bird)) {
+                        console.info("collision bullet bird");
                         _this._isPaused = true;
                     }
                 });
@@ -72,8 +82,6 @@ var scenes;
             }
             this._pauseButton.changeImage("PauseButton");
         };
-        Play.prototype.Reset = function () {
-        };
         Play.prototype.Destroy = function () {
             this.removeAllChildren();
         };
@@ -85,6 +93,14 @@ var scenes;
             this.addChild(this._pauseButton);
             this._backButton.on("click", function () {
                 this.backToMenu();
+            }, this);
+            this._bird.on("click", function () {
+                for (var i = 0; i < this._tanks.length; i++) {
+                    this._tanks[i].Fire(this._bullets[i]);
+                }
+                // this._tanks.forEach(tank => {
+                //
+                // });
             }, this);
             this._pauseButton.on("click", function () {
                 this.Pause();
@@ -102,11 +118,15 @@ var scenes;
             // }, this);
             // add the Bird object to the scene
             this.addChild(this._bird);
-            // add the Cloud(s) to the scene
             for (var _i = 0, _a = this._tanks; _i < _a.length; _i++) {
                 var tank = _a[_i];
                 this.addChild(tank);
             }
+            for (var _b = 0, _c = this._bullets; _b < _c.length; _b++) {
+                var bullet = _c[_b];
+                this.addChild(bullet);
+            }
+            //this.addChild(this._bullet);
         };
         Play.prototype.keydown = function (event) {
             managers.Keyboard.keyUp = managers.Keyboard.keyDown = false;

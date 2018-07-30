@@ -4,9 +4,11 @@ module scenes {
         private _bird:objects.Bird;
         private _background:objects.Background;
         private _tanks:objects.Tank[];
+         private _bullets:objects.Bullet[];
         private _pauseButton:objects.Button;
 
-        private _isPaused;
+        private _isPaused:boolean;
+        private isBulletFire:boolean;
 
         // constructors
         constructor() {
@@ -29,6 +31,7 @@ module scenes {
         private _buildTanks(tankNum):void {
             for (let count = 0; count < tankNum; count++) {
                 this._tanks.push(new objects.Tank());
+                 this._bullets.push(new objects.Bullet());
             }
         }
 
@@ -48,6 +51,9 @@ module scenes {
             // create an empty Array List-like object of clouds
             this._tanks = new Array<objects.Tank>();
 
+            //Bullets
+             this._bullets=new Array<objects.Bullet>();
+
             this._buildTanks(3);
 
             this.Main();
@@ -61,10 +67,20 @@ module scenes {
             this._tanks.forEach(tank => {
                 tank.Update();
                 if(managers.Collision.check(tank,this._bird)){
-                  console.info("collision");
+                  console.info("collision tank bird");
                   this._isPaused=true;
                 }
             });
+
+            this._bullets.forEach(bullet => {
+                bullet.Update();
+                if(managers.Collision.check(bullet,this._bird)){
+                  console.info("collision bullet bird");
+                  this._isPaused=true;
+                }
+            });
+
+
           }
         }
 
@@ -81,10 +97,6 @@ module scenes {
           this._pauseButton.changeImage("PauseButton");
         }
 
-        public Reset():void {
-
-        }
-
         public Destroy():void {
             this.removeAllChildren();
         }
@@ -99,6 +111,15 @@ module scenes {
 
             this._backButton.on("click", function(){
                 this.backToMenu();
+            }, this);
+
+            this._bird.on("click", function(){
+              for(let i=0;i<this._tanks.length;i++){
+                this._tanks[i].Fire(this._bullets[i]);
+              }
+              // this._tanks.forEach(tank => {
+              //
+              // });
             }, this);
 
             this._pauseButton.on("click", function(){
@@ -123,10 +144,13 @@ module scenes {
             // add the Bird object to the scene
             this.addChild(this._bird);
 
-            // add the Cloud(s) to the scene
             for (const tank of this._tanks) {
                 this.addChild(tank);
             }
+            for (const bullet of this._bullets) {
+                this.addChild(bullet);
+            }
+            //this.addChild(this._bullet);
         }
 
         public keydown(event):void {

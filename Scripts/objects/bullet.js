@@ -13,38 +13,46 @@ var objects;
     var Bullet = /** @class */ (function (_super) {
         __extends(Bullet, _super);
         // constructors
-        /**
-         * Creates an instance of Button.
-         * @param {string} imagePath
-         * @param {number} [x=0]
-         * @param {number} [y=0]
-         * @param {boolean} [isCentered=false]
-         */
-        function Bullet(imagePath, x, y, isCentered) {
-            if (x === void 0) { x = 0; }
-            if (y === void 0) { y = 0; }
-            if (isCentered === void 0) { isCentered = false; }
-            var _this = _super.call(this, imagePath) || this;
-            _this.isCentered = isCentered;
-            if (isCentered) {
-                _this.regX = _this.halfWidth;
-                _this.regY = _this.halfHeight;
-            }
-            _this.x = x;
-            _this.y = y;
+        function Bullet() {
+            var _this = _super.call(this, "bullet") || this;
+            _this.isShooting = false;
+            _this.Reset();
             return _this;
         }
-        // public methods
-        /**
-         * The Start Method performs object initialization
-         *
-         * @returns {void}
-         */
+        Bullet.prototype._checkBounds = function () {
+            if (this.x <= 0 || this.y <= 0) {
+                this.Reset();
+            }
+        };
         Bullet.prototype.Start = function () {
+            //this._verticalSpeed = 1.2; // the tank will move down 5ppf
+            this._horizontalSpeed = this.getRandomSpeed(10, 15); // the tank will move down 5ppf
+            console.info(this._horizontalSpeed);
         };
         Bullet.prototype.Update = function () {
+            if (this.isShooting) {
+                this.x -= this._horizontalSpeed;
+                this.y -= this._horizontalSpeed;
+                console.log(this.x + " " + this.y);
+                this._checkBounds();
+            }
+        };
+        Bullet.prototype.setCord = function (x, y) {
+            this.x = x;
+            this.y = y;
+            this._horizontalSpeed = this.getRandomSpeed(10, 15);
         };
         Bullet.prototype.Reset = function () {
+            //this._horizontalSpeed = this.getRandomSpeed(10,15);
+            this.x = config.Screen.WIDTH + 10;
+            this.y = config.Screen.WIDTH + 10;
+            this.isShooting = false;
+        };
+        Bullet.prototype.getRandomSpeed = function (min, max) {
+            var speed = (Math.floor(Math.random() * (max - min + 1)) + min) / 10;
+            console.info("speed " + speed);
+            return speed;
+            //return .1
         };
         return Bullet;
     }(objects.GameObject));
