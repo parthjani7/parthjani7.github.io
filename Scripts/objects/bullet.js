@@ -44,7 +44,8 @@ var objects;
         Bullet.prototype.Fire = function (x, y) {
             this.setTargetXY(x, y);
             this.isShooting = true;
-            createjs.Sound.play("gun");
+            if (scenes.Setting.getSound())
+                createjs.Sound.play("gun");
         };
         Bullet.prototype.setCord = function (x, y) {
             this.x = x;

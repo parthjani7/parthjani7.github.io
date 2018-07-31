@@ -37,6 +37,7 @@ var objects;
             this._checkBounds();
         };
         Tank.prototype.Reset = function () {
+            managers.Game.ScoreBoard.Score += 100;
             this._horizontalSpeed = this.getRandomSpeed(10, 15) / 10;
             this.x = config.Screen.WIDTH;
         };

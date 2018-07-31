@@ -53,17 +53,11 @@ var scenes;
                         this._bullets[i].Fire(this._bird.x, this._bird.y);
                     }
                     this._tanks[i].Update();
-                    if (managers.Collision.check(this._tanks[i], this._bird)) {
-                        console.info("collision tank bird");
-                        this._isPaused = true;
-                    }
+                    managers.Collision.check(this._bird, this._tanks[i]);
                 }
                 this._bullets.forEach(function (bullet) {
                     bullet.Update();
-                    if (managers.Collision.check(bullet, _this._bird)) {
-                        console.info("collision bullet bird");
-                        _this._isPaused = true;
-                    }
+                    managers.Collision.check(_this._bird, bullet);
                 });
             }
         };
@@ -104,6 +98,8 @@ var scenes;
                 var bullet = _c[_b];
                 this.addChild(bullet);
             }
+            this.addChild(managers.Game.ScoreBoard.LivesLabel);
+            this.addChild(managers.Game.ScoreBoard.ScoreLabel);
         };
         Play.prototype.keydown = function (event) {
             managers.Keyboard.keyUp = managers.Keyboard.keyDown = false;

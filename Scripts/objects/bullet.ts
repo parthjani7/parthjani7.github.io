@@ -43,7 +43,8 @@ module objects {
       public Fire(x,y):void {
         this.setTargetXY(x,y);
         this.isShooting=true;
-        createjs.Sound.play("gun");
+        if(scenes.Setting.getSound())
+          createjs.Sound.play("gun");
       }
 
       public setCord(x,y):void {

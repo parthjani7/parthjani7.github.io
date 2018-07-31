@@ -21,7 +21,7 @@ var scenes;
         // private methods
         // public methods
         End.prototype.Start = function () {
-            this._endLabel = new objects.Label("Game Over!", "60px", "Consolas", "#000000", 320, 240, true);
+            this._endLabel = new objects.Label("Game Over!", "60px", "Consolas", "#000", config.Screen.HALF_WIDTH, 240, true);
             //Backbutton
             this._backButton = new objects.Button("BackButton", config.Screen.WIDTH - config.Screen.WIDTH + 50, config.Screen.HEIGHT - config.Screen.HEIGHT + 50, true);
             this._background = new objects.Background();
@@ -40,6 +40,7 @@ var scenes;
             this.addChild(this._endLabel);
             this.addChild(this._backButton);
             this._backButton.on("click", function () {
+                managers.Game.ScoreBoard.Reset();
                 managers.Game.CurrentState = config.Scene.PLAY;
             }, this);
         };

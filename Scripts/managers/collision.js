@@ -9,17 +9,21 @@ var managers;
             if (math.Vec2.Distance(P1, P2) < (object1.halfHeight + object2.halfHeight)) {
                 if (!object2.isColliding) {
                     object2.isColliding = true;
-                    // if(scenes.Setting.getSound()){
-                    //   switch(object2.name) {
-                    //       case "island":
-                    //       createjs.Sound.play("yay");
-                    //       break;
-                    //
-                    //       case "cloud":
-                    //       createjs.Sound.play("thunder");
-                    //       break;
-                    //   }
-                    // }
+                    console.info(object2.name);
+                    switch (object2.name) {
+                        case "bullet":
+                            managers.Game.ScoreBoard.Lives -= 1;
+                            if (scenes.Setting.getSound()) {
+                                createjs.Sound.play("thunder");
+                            }
+                            break;
+                        case "tank_small":
+                            managers.Game.ScoreBoard.Lives -= 1;
+                            if (scenes.Setting.getSound()) {
+                                createjs.Sound.play("thunder");
+                            }
+                            break;
+                    }
                 }
             }
             else {

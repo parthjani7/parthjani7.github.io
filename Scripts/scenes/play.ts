@@ -60,19 +60,12 @@ module scenes {
                 }
 
                 this._tanks[i].Update();
-                if(managers.Collision.check(this._tanks[i],this._bird)){
-                  console.info("collision tank bird");
-                  this._isPaused=true;
-                }
+                managers.Collision.check(this._bird,this._tanks[i]);
             }
 
             this._bullets.forEach(bullet => {
-                
                 bullet.Update();
-                if(managers.Collision.check(bullet,this._bird)){
-                  console.info("collision bullet bird");
-                  this._isPaused=true;
-                }
+                managers.Collision.check(this._bird,bullet);
             });
 
 
@@ -122,6 +115,8 @@ module scenes {
             for (const bullet of this._bullets) {
                 this.addChild(bullet);
             }
+            this.addChild(managers.Game.ScoreBoard.LivesLabel);
+            this.addChild(managers.Game.ScoreBoard.ScoreLabel);
             
         }
 
