@@ -25,7 +25,9 @@
         { id: "button_click", src: "/Assets/audio/button_click.mp3" },
         { id: "mouseover", src: "/Assets/audio/mouseover1.mp3" },
         { id: "menu_background", src: "/Assets/audio/instruction_background.wav" },
-        { id: "gun", src: "/Assets/audio/gun.wav" },
+        { id: "gun", src: "/Assets/audio/gunshots/gun.wav" },
+        { id: "gun2", src: "/Assets/audio/gunshots/gun2.wav" },
+        { id: "gun3", src: "/Assets/audio/gunshots/gun3.wav" },
     ];
     function Init() {
         console.log("%c Assets Loading...", "font-weight:bold; font-size:20px; color: green;");

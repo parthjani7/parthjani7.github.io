@@ -4,7 +4,7 @@ module scenes {
         private _bird:objects.Bird;
         private _background:objects.Background;
         private _tanks:objects.Tank[];
-         private _bullets:objects.Bullet[];
+        private _bullets:objects.Bullet[];
         private _pauseButton:objects.Button;
         
         private _isPaused:boolean;
@@ -21,9 +21,7 @@ module scenes {
         public Start():void {
 
             this._bird = new objects.Bird();
-            //this._bird.scaleX="0.3";
             this._background = new objects.Background();
-            //this._tanks = new objects.Tank();
 
             //Backbutton
             this._backButton = new objects.Button("BackButton",config.Screen.WIDTH-50, config.Screen.HEIGHT-config.Screen.HEIGHT+50, true);
@@ -37,7 +35,7 @@ module scenes {
              this._bullets=new Array<objects.Bullet>();
 
             this._buildTanks(3);
-            managers.Shooting.isShooting=true;
+            managers.Shooting.isFired=true;
             this.Main();
         }
 
@@ -55,14 +53,11 @@ module scenes {
             this._background.Update();
 
             for(var i=0;i<this._tanks.length;i++){
-                if(this._tanks[i].x > 300 && managers.Shooting.isShooting && this._bullets[i].isShooting==false){
-                //if(this._tanks[i].x > 0 && managers.Shooting.isShooting && this._bullets[i].isShooting==false){
+                if(this._tanks[i].x > 300 && managers.Shooting.isFired && !this._bullets[i].isShooting){
                     this._bullets[i].setCord(this._tanks[i].x,this._tanks[i].y);
                     this._bullets[i].y=this._tanks[i].y;
                     this._bullets[i].Fire(this._bird.x,this._bird.y);
-                    console.info("fired");
                 }
-               
 
                 this._tanks[i].Update();
                 if(managers.Collision.check(this._tanks[i],this._bird)){
@@ -71,7 +66,6 @@ module scenes {
                 }
             }
 
-            managers.Shooting.isShooting=false;
             this._bullets.forEach(bullet => {
                 
                 bullet.Update();
@@ -104,6 +98,7 @@ module scenes {
 
         public Main():void {
             console.log("Started - PLAY SCENE");
+            managers.Keyboard.keyUp=managers.Keyboard.keyDown=false;
 
             // add the Background object to the scene
             this.addChild(this._background);
@@ -114,16 +109,6 @@ module scenes {
                 this.backToMenu();
             }, this);
             
-
-            // this._bird.on("click", function(){
-            //   for(let i=0;i<this._tanks.length;i++){
-            //     this._tanks[i].Fire(this._bullets[i]);
-            //   }
-            //   // this._tanks.forEach(tank => {
-            //   //
-            //   // });
-            // }, this);
-
             this._pauseButton.on("click", function(){
                 this.Pause();
             }, this);
@@ -138,7 +123,6 @@ module scenes {
                 this.addChild(bullet);
             }
             
-            //this.addChild(this._bullet);
         }
 
         public keydown(event):void {

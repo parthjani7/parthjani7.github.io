@@ -30,11 +30,9 @@ var objects;
             this._horizontalSpeed = this.getRandomSpeed(10, 15);
         };
         Bullet.prototype.Update = function () {
-            var velocityX = Math.cos((this.angle) * Math.PI / 180) * (this._horizontalSpeed * 2.5);
-            var velocityY = Math.sin((this.angle) * Math.PI / 180) * (this._horizontalSpeed * 2.5);
             if (this.isShooting) {
-                this.x += velocityX;
-                this.y += velocityY;
+                this.x += Math.cos((this.angle) * Math.PI / 180) * (this._horizontalSpeed * 2.5);
+                this.y += Math.sin((this.angle) * Math.PI / 180) * (this._horizontalSpeed * 2.5);
                 this._checkBounds();
             }
         };
@@ -54,10 +52,10 @@ var objects;
             this._horizontalSpeed = this.getRandomSpeed(10, 15);
         };
         Bullet.prototype.Reset = function () {
+            managers.Shooting.isFired = true;
+            this.isShooting = false;
             this.x = config.Screen.WIDTH + 10;
             this.y = config.Screen.WIDTH + 10;
-            this.isShooting = false;
-            managers.Shooting.isShooting = true;
         };
         Bullet.prototype.getRandomSpeed = function (min, max) {
             var speed = (Math.floor(Math.random() * (max - min + 1)) + min) / 6;

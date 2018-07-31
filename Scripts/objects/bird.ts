@@ -5,7 +5,7 @@ module objects {
         // constructors
         constructor() {
             super("bird");
-
+            this.y=config.Screen.HALF_HEIGHT;
             this.Start();
 
         }

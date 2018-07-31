@@ -24,9 +24,7 @@ module objects {
 
          // public methods
          public Start():void {
-             this._verticalSpeed = .7; // the Background will move down 5ppf
-             //this._verticalSpeed = 0; // the Background will move down 5ppf
-
+            this._verticalSpeed = .7; // the Background will move down 5ppf
             this.Reset();
         }
 

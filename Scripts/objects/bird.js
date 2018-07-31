@@ -16,6 +16,7 @@ var objects;
         // constructors
         function Bird() {
             var _this = _super.call(this, "bird") || this;
+            _this.y = config.Screen.HALF_HEIGHT;
             _this.Start();
             return _this;
         }

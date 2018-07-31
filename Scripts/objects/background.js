@@ -32,7 +32,6 @@ var objects;
         // public methods
         Background.prototype.Start = function () {
             this._verticalSpeed = .7; // the Background will move down 5ppf
-            //this._verticalSpeed = 0; // the Background will move down 5ppf
             this.Reset();
         };
         Background.prototype.Update = function () {

@@ -23,9 +23,7 @@ var scenes;
         // public methods
         Play.prototype.Start = function () {
             this._bird = new objects.Bird();
-            //this._bird.scaleX="0.3";
             this._background = new objects.Background();
-            //this._tanks = new objects.Tank();
             //Backbutton
             this._backButton = new objects.Button("BackButton", config.Screen.WIDTH - 50, config.Screen.HEIGHT - config.Screen.HEIGHT + 50, true);
             this._pauseButton = new objects.Button("PauseButton", config.Screen.WIDTH - 120, config.Screen.HEIGHT - config.Screen.HEIGHT + 50, true);
@@ -34,7 +32,7 @@ var scenes;
             //Bullets
             this._bullets = new Array();
             this._buildTanks(3);
-            managers.Shooting.isShooting = true;
+            managers.Shooting.isFired = true;
             this.Main();
         };
         Play.prototype._buildTanks = function (tankNum) {
@@ -49,12 +47,10 @@ var scenes;
                 this._bird.Update();
                 this._background.Update();
                 for (var i = 0; i < this._tanks.length; i++) {
-                    if (this._tanks[i].x > 300 && managers.Shooting.isShooting && this._bullets[i].isShooting == false) {
-                        //if(this._tanks[i].x > 0 && managers.Shooting.isShooting && this._bullets[i].isShooting==false){
+                    if (this._tanks[i].x > 300 && managers.Shooting.isFired && !this._bullets[i].isShooting) {
                         this._bullets[i].setCord(this._tanks[i].x, this._tanks[i].y);
                         this._bullets[i].y = this._tanks[i].y;
                         this._bullets[i].Fire(this._bird.x, this._bird.y);
-                        console.info("fired");
                     }
                     this._tanks[i].Update();
                     if (managers.Collision.check(this._tanks[i], this._bird)) {
@@ -62,7 +58,6 @@ var scenes;
                         this._isPaused = true;
                     }
                 }
-                managers.Shooting.isShooting = false;
                 this._bullets.forEach(function (bullet) {
                     bullet.Update();
                     if (managers.Collision.check(bullet, _this._bird)) {
@@ -88,6 +83,7 @@ var scenes;
         };
         Play.prototype.Main = function () {
             console.log("Started - PLAY SCENE");
+            managers.Keyboard.keyUp = managers.Keyboard.keyDown = false;
             // add the Background object to the scene
             this.addChild(this._background);
             this.addChild(this._backButton);
@@ -95,14 +91,6 @@ var scenes;
             this._backButton.on("click", function () {
                 this.backToMenu();
             }, this);
-            // this._bird.on("click", function(){
-            //   for(let i=0;i<this._tanks.length;i++){
-            //     this._tanks[i].Fire(this._bullets[i]);
-            //   }
-            //   // this._tanks.forEach(tank => {
-            //   //
-            //   // });
-            // }, this);
             this._pauseButton.on("click", function () {
                 this.Pause();
             }, this);
@@ -116,7 +104,6 @@ var scenes;
                 var bullet = _c[_b];
                 this.addChild(bullet);
             }
-            //this.addChild(this._bullet);
         };
         Play.prototype.keydown = function (event) {
             managers.Keyboard.keyUp = managers.Keyboard.keyDown = false;
