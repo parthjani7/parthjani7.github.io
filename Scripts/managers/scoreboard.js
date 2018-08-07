@@ -53,6 +53,8 @@ var managers;
             set: function (newValue) {
                 this._lives = newValue;
                 if (this._lives <= 0) {
+                    if (this.HighScore == undefined || this.HighScore < this.Score)
+                        this.HighScore = this.Score;
                     managers.Game.CurrentState = config.Scene.END;
                 }
                 else {
@@ -64,10 +66,11 @@ var managers;
         });
         Object.defineProperty(ScoreBoard.prototype, "HighScore", {
             get: function () {
-                return this._highScore;
+                return parseInt(localStorage.getItem('highscore'));
             },
             set: function (newValue) {
                 this._highScore = newValue;
+                localStorage.setItem('highscore', newValue.toString());
                 this.HighScoreLabel.text = "High Score: " + this._highScore;
             },
             enumerable: true,
@@ -93,7 +96,6 @@ var managers;
             this._livesLabel = new objects.Label("Lives: 99", "25px", "Dock51", "#000", config.Screen.WIDTH - 270, 20, false);
             this._scoreLabel = new objects.Label("Score: 99999", "25px", "Dock51", "#000", config.Screen.WIDTH - 420, 20, false);
             this._highScoreLabel = new objects.Label("High Score: 999999", "60px", "Dock51", "#000", config.Screen.HALF_WIDTH, config.Screen.HALF_HEIGHT, true);
-            this.HighScore = 0;
             this.Reset();
         };
         ScoreBoard.prototype.Reset = function () {

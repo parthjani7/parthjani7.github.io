@@ -27,6 +27,9 @@ module scenes {
         }
 
         public Main():void {
+            if(Setting.getSound()){
+                Setting.playBackgroundMusic("menu_background");
+            }
             console.log("Started - Quit SCENE");
             // add the Background object to the scene
             this.addChild(this._background);

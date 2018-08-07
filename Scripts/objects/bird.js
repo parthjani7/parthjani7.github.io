@@ -15,7 +15,7 @@ var objects;
         // member variables
         // constructors
         function Bird() {
-            var _this = _super.call(this, "bird") || this;
+            var _this = _super.call(this, Bird.getBird()) || this;
             _this.y = config.Screen.HALF_HEIGHT;
             _this.Start();
             return _this;
@@ -36,6 +36,16 @@ var objects;
             this.regY = this.halfHeight;
             this.regX = this.halfWidth;
             this.x = 120;
+        };
+        Bird.getBird = function () {
+            var bird = localStorage.getItem("bird");
+            if (!bird) {
+                return "bird1";
+            }
+            return bird;
+        };
+        Bird.setBird = function (bird) {
+            localStorage.setItem("bird", bird.toString());
         };
         Bird.prototype.Update = function () {
             //this.y = managers.Game.Stage.mouseY;

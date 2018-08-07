@@ -28,13 +28,14 @@ var objects;
         Scene.prototype.Destroy = function () {
         };
         Scene.prototype.backToMenu = function () {
-            this.stopBackgroundMusic();
+            Scene.stopBackgroundMusic();
+            managers.Game.ScoreBoard.Reset();
             managers.Game.CurrentState = config.Scene.START;
         };
-        Scene.prototype.playBackgroundMusic = function (menu_background) {
+        Scene.playBackgroundMusic = function (menu_background) {
             createjs.Sound.play(menu_background, { interrupt: createjs.Sound.INTERRUPT_ANY, loop: -1 });
         };
-        Scene.prototype.stopBackgroundMusic = function () {
+        Scene.stopBackgroundMusic = function () {
             createjs.Sound.stop();
         };
         Scene.prototype.Main = function () {

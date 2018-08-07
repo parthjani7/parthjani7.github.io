@@ -20,7 +20,7 @@ module scenes {
 
             if(Setting.getSound()){
                 this._soundButton = new objects.Button("SoundOnButton", config.Screen.WIDTH/2, 130, true);
-                this.playBackgroundMusic("menu_background");
+                Setting.playBackgroundMusic("menu_background");
             }
 
             this._soundLable1 = new objects.Label("Sound Preference: "+(Setting.getSound()?"ON":"OFF"), "25px", "Consolas", "#000000",(config.Screen.WIDTH/2)-30, 200, true);
@@ -45,7 +45,7 @@ module scenes {
 
 				public soundToggle():void{
 					if(Setting.getSound()){
-            this.stopBackgroundMusic();
+            Setting.stopBackgroundMusic();
 						localStorage.setItem("space_shooter_sound","false");
             this._soundLable1.text="Sound Preference: OFF";
             this._soundButton.changeImage("SoundOffButton");
@@ -54,7 +54,7 @@ module scenes {
 					localStorage.setItem("space_shooter_sound","true");
           this._soundButton.changeImage("SoundOnButton");
           this._soundLable1.text="Sound Preference: ON";
-          this.playBackgroundMusic("menu_background");
+          Setting.playBackgroundMusic("menu_background");
 
 				}
 

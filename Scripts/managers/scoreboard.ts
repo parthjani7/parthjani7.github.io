@@ -49,6 +49,8 @@ module managers {
         set Lives(newValue:number) {
             this._lives = newValue;
             if(this._lives <= 0) {
+                if(this.HighScore==undefined || this.HighScore < this.Score)
+                    this.HighScore=this.Score;
                 managers.Game.CurrentState = config.Scene.END;
             }
             else {
@@ -57,11 +59,12 @@ module managers {
         }
 
         get HighScore():number {
-            return this._highScore;
+            return parseInt(localStorage.getItem('highscore'));
         }
 
         set HighScore(newValue:number) {
             this._highScore = newValue;
+            localStorage.setItem('highscore',newValue.toString());
             this.HighScoreLabel.text = "High Score: " + this._highScore;
         }
 
@@ -90,8 +93,6 @@ module managers {
             this._livesLabel = new objects.Label("Lives: 99", "25px", "Dock51", "#000", config.Screen.WIDTH-270,20, false);
             this._scoreLabel = new objects.Label("Score: 99999", "25px", "Dock51", "#000", config.Screen.WIDTH-420,20, false);
             this._highScoreLabel = new objects.Label("High Score: 999999", "60px", "Dock51", "#000", config.Screen.HALF_WIDTH, config.Screen.HALF_HEIGHT, true);
-            
-            this.HighScore = 0;
             this.Reset();
         }
 

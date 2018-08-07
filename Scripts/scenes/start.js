@@ -25,6 +25,7 @@ var scenes;
             this._playButton = new objects.Button("PlayButton", config.Screen.WIDTH / 2, 230, true);
             this._settingButton = new objects.Button("SettingButton", config.Screen.WIDTH - config.Screen.WIDTH + 80, config.Screen.HEIGHT - 40, true);
             this._instructionButton = new objects.Button("InstructionButton", config.Screen.WIDTH - config.Screen.WIDTH + 150, config.Screen.HEIGHT - 40, true);
+            this._characterButton = new objects.Button("CharacterButton", config.Screen.WIDTH - config.Screen.WIDTH + 220, config.Screen.HEIGHT - 40, true);
             this._aboutButton = new objects.Button("AboutButton", config.Screen.WIDTH - 150, config.Screen.HEIGHT - 40, true);
             this._exitButton = new objects.Button("ExitButton", config.Screen.WIDTH - 80, config.Screen.HEIGHT - 40, true);
             this._background = new objects.Background();
@@ -46,6 +47,7 @@ var scenes;
             this.addChild(this._instructionButton);
             this.addChild(this._aboutButton);
             this.addChild(this._exitButton);
+            this.addChild(this._characterButton);
             this._playButton.on("click", function () {
                 managers.Game.CurrentState = config.Scene.PLAY;
             }, this);
@@ -60,6 +62,9 @@ var scenes;
             }, this);
             this._exitButton.on("click", function () {
                 managers.Game.CurrentState = config.Scene.QUIT;
+            }, this);
+            this._characterButton.on("click", function () {
+                managers.Game.CurrentState = config.Scene.CHARACTER;
             }, this);
         };
         return Start;

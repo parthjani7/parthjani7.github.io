@@ -1,10 +1,11 @@
 module objects {
     export class Bird extends objects.GameObject {
+        
         // member variables
 
         // constructors
         constructor() {
-            super("bird");
+            super(Bird.getBird());
             this.y=config.Screen.HALF_HEIGHT;
             this.Start();
 
@@ -28,6 +29,18 @@ module objects {
             this.regY = this.halfHeight;
             this.regX = this.halfWidth;
             this.x = 120;
+        }
+
+        public static getBird(): string {
+            var bird=localStorage.getItem("bird");
+            if(!bird){
+                return "bird1";
+            }
+            return bird;
+        }
+
+        public static setBird(bird:string):void {
+            localStorage.setItem("bird",bird.toString());
         }
 
         public Update():void {

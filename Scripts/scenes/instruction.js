@@ -35,6 +35,9 @@ var scenes;
             this.removeAllChildren();
         };
         Instruction.prototype.Main = function () {
+            if (scenes.Setting.getSound()) {
+                scenes.Setting.playBackgroundMusic("menu_background");
+            }
             console.log("Started - Instruction SCENE");
             this.addChild(this._background);
             // add the Background object to the scene

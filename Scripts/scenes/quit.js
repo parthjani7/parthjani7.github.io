@@ -32,6 +32,9 @@ var scenes;
             this.removeAllChildren();
         };
         Quit.prototype.Main = function () {
+            if (scenes.Setting.getSound()) {
+                scenes.Setting.playBackgroundMusic("menu_background");
+            }
             console.log("Started - Quit SCENE");
             // add the Background object to the scene
             this.addChild(this._background);

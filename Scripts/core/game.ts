@@ -15,12 +15,18 @@
         {id: "SettingButton", src:"/Assets/images/buttons/setting.png"},
         {id: "InstructionButton", src:"/Assets/images/buttons/question.png"},
         {id: "AboutButton", src:"/Assets/images/buttons/info.png"},
+        {id: "CharacterButton", src:"/Assets/images/buttons/character.png"},
         {id: "ExitButton", src:"/Assets/images/buttons/close.png"},
         {id: "BackButton", src:"/Assets/images/buttons/back.png"},
         {id: "SoundOnButton", src:"/Assets/images/buttons/sound_on.png"},
         {id: "SoundOffButton", src:"/Assets/images/buttons/sound_off.png"},
         {id: "PauseButton", src:"/Assets/images/buttons/pause.png"},
-        {id: "bird", src:"/Assets/images/characters/bird3.png"},
+        {id: "bird1", src:"/Assets/images/characters/bird3.png"},
+        {id: "bird2", src:"/Assets/images/characters/img2.png"},
+        {id: "bird3", src:"/Assets/images/characters/img3.png"},
+        {id: "bird4", src:"/Assets/images/characters/img4.png"},
+        {id: "bird5", src:"/Assets/images/characters/img5.png"},
+        {id: "bird6", src:"/Assets/images/characters/img6.png"},
         {id: "tank", src:"/Assets/images/characters/tank.jpg"},
         {id: "tank_small", src:"/Assets/images/characters/tank_small.png"},
         {id: "bullet", src:"/Assets/images/bullet.png"},
@@ -99,6 +105,10 @@
               CurrentScene = new scenes.Instruction();
               break;
 
+            case config.Scene.CHARACTER:
+              CurrentScene = new scenes.Character();
+              break;
+
             case config.Scene.ABOUT:
               CurrentScene = new scenes.About();
               break;
@@ -111,7 +121,7 @@
               CurrentScene = new scenes.End();
               break;
         }
-
+        
         managers.Game.CurrentScene = CurrentScene;
         stage.addChild(CurrentScene);
     }

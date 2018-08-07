@@ -33,6 +33,9 @@ module scenes {
         }
 
         public Main():void {
+            if(Setting.getSound()){
+                Setting.playBackgroundMusic("menu_background");
+            }
             console.log("Started - Instruction SCENE");
             this.addChild(this._background);
             // add the Background object to the scene

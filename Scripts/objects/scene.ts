@@ -29,14 +29,15 @@ module objects {
 
         }
         public backToMenu():void{
-          this.stopBackgroundMusic();
+          Scene.stopBackgroundMusic();
+          managers.Game.ScoreBoard.Reset();
           managers.Game.CurrentState = config.Scene.START;
-				}
+        }
 
-        public playBackgroundMusic(menu_background){
+        public static playBackgroundMusic(menu_background){
             createjs.Sound.play(menu_background, {interrupt: createjs.Sound.INTERRUPT_ANY, loop:-1});
         }
-        public stopBackgroundMusic(){
+        public static stopBackgroundMusic(){
             createjs.Sound.stop();
         }
 

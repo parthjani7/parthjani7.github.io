@@ -21,7 +21,9 @@ var scenes;
         // private methods
         // public methods
         End.prototype.Start = function () {
-            this._endLabel = new objects.Label("Game Over!", "60px", "Consolas", "#000", config.Screen.HALF_WIDTH, 240, true);
+            this._endLabel = new objects.Label("Game Over!", "60px", "Consolas", "#f00", config.Screen.HALF_WIDTH, 180, true);
+            this._highScore = new objects.Label("Hight Score: " + managers.Game.ScoreBoard.HighScore, "60px", "Consolas", "#000", config.Screen.HALF_WIDTH, 260, true);
+            this._currentScore = new objects.Label("Your Score: " + managers.Game.ScoreBoard.Score, "40px", "Consolas", "#000", config.Screen.HALF_WIDTH, 330, true);
             //Backbutton
             this._backButton = new objects.Button("BackButton", config.Screen.WIDTH - config.Screen.WIDTH + 50, config.Screen.HEIGHT - config.Screen.HEIGHT + 50, true);
             this._background = new objects.Background();
@@ -35,13 +37,19 @@ var scenes;
             this.removeAllChildren();
         };
         End.prototype.Main = function () {
+            if (scenes.Setting.getSound()) {
+                scenes.Setting.playBackgroundMusic("menu_background");
+            }
             console.log("Started - END SCENE");
             this.addChild(this._background);
+            this.addChild(this._endLabel);
+            this.addChild(this._highScore);
+            this.addChild(this._currentScore);
             this.addChild(this._endLabel);
             this.addChild(this._backButton);
             this._backButton.on("click", function () {
                 managers.Game.ScoreBoard.Reset();
-                managers.Game.CurrentState = config.Scene.PLAY;
+                this.backToMenu();
             }, this);
         };
         return End;

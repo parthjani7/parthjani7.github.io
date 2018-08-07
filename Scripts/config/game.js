@@ -4,7 +4,7 @@ var config;
         function Game() {
         }
         Game.NAME = "TankShooterX";
-        Game.VERSION = "1.0 - Alpha";
+        Game.VERSION = "3.0 - Final Release";
         Game.GUIDE = "Prof. Tom Tsiliopoulos";
         return Game;
     }());
