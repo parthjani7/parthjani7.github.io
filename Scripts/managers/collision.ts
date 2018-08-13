@@ -13,14 +13,14 @@ module managers {
                           case "bullet":
                           managers.Game.ScoreBoard.Lives -= 1;
                             if(scenes.Setting.getSound()){
-                                createjs.Sound.play("thunder");
+                                createjs.Sound.play("hawk");
                             }
                             break;
                     
                           case "tank_small":
                             managers.Game.ScoreBoard.Lives -= 1;
                             if(scenes.Setting.getSound()){
-                                createjs.Sound.play("thunder");
+                                createjs.Sound.play("hawk");
                             }
                             break;
                       }

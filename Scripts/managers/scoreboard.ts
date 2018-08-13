@@ -2,7 +2,7 @@ module managers {
     export class ScoreBoard {
         // private member variables
         private _lives:number;
-        private _score:number;
+        private _score:number=0;
         private _highScore:number;
         private _livesLabel:objects.Label;
         private _scoreLabel:objects.Label;
@@ -19,6 +19,7 @@ module managers {
         get LivesLabel():objects.Label {
             return this._livesLabel;
         }
+        
 
         /**
          * This returns a reference to the ScoreLabel object
@@ -49,8 +50,10 @@ module managers {
         set Lives(newValue:number) {
             this._lives = newValue;
             if(this._lives <= 0) {
-                if(this.HighScore==undefined || this.HighScore < this.Score)
+                if(this.HighScore==undefined || this.HighScore < this.Score){
+                    scenes.Setting.stopBackgroundMusic();
                     this.HighScore=this.Score;
+                }
                 managers.Game.CurrentState = config.Scene.END;
             }
             else {
@@ -59,6 +62,9 @@ module managers {
         }
 
         get HighScore():number {
+            if(localStorage.getItem('highscore')==undefined){
+                 return 0;    
+             }
             return parseInt(localStorage.getItem('highscore'));
         }
 
@@ -69,21 +75,28 @@ module managers {
         }
 
         get Score():number {
+            //this._score=parseInt(localStorage.getItem('highscore'));
             return this._score;
         }
 
         set Score(newValue:number) {
             this._score = newValue;
             this.ScoreLabel.text = "Score: " + this._score;
+        }
+
+        set increaseScore(newValue:number){
+            this._score += newValue;
+            this.ScoreLabel.text = "Score: " + this._score;
             if(this._score > this.HighScore) {
                 this.HighScore = this._score;
-            }
+            } 
         }
 
         
         // constructors
         constructor() {
             this.Start();
+            this.Score=0;
         }
 
         // private methods
@@ -92,12 +105,11 @@ module managers {
         public Start() {
             this._livesLabel = new objects.Label("Lives: 99", "25px", "Dock51", "#000", config.Screen.WIDTH-270,20, false);
             this._scoreLabel = new objects.Label("Score: 99999", "25px", "Dock51", "#000", config.Screen.WIDTH-420,20, false);
-            this._highScoreLabel = new objects.Label("High Score: 999999", "60px", "Dock51", "#000", config.Screen.HALF_WIDTH, config.Screen.HALF_HEIGHT, true);
+            this._highScoreLabel = new objects.Label("High Score: 0", "60px", "Dock51", "#000", config.Screen.HALF_WIDTH, config.Screen.HALF_HEIGHT, true);
             this.Reset();
         }
 
         public Reset() {
-            console.info("game reset");
             this.Lives = 5;
             this.Score = 0;
         }

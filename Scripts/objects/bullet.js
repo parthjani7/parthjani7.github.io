@@ -16,6 +16,8 @@ var objects;
         function Bullet() {
             var _this = _super.call(this, "bullet") || this;
             _this.isShooting = false;
+            _this.minSpeed = 10;
+            _this.maxSpeed = 15;
             _this.rotation = -60;
             _this.Reset();
             _this.targetX = _this.targetY = _this.angle = 0;
@@ -27,7 +29,10 @@ var objects;
             }
         };
         Bullet.prototype.Start = function () {
-            this._horizontalSpeed = this.getRandomSpeed(10, 15);
+            // if(managers.Game.ScoreBoard.HighScore > 1000){
+            //   this.increseBulletspeed(2);
+            // }
+            this._horizontalSpeed = this.getRandomSpeed(this.minSpeed, this.maxSpeed);
         };
         Bullet.prototype.Update = function () {
             if (this.isShooting) {
@@ -45,12 +50,13 @@ var objects;
             this.setTargetXY(x, y);
             this.isShooting = true;
             if (scenes.Setting.getSound())
-                createjs.Sound.play("gun");
+                createjs.Sound.volume = 0.02;
+            createjs.Sound.play("gun");
         };
         Bullet.prototype.setCord = function (x, y) {
             this.x = x;
             this.y = y;
-            this._horizontalSpeed = this.getRandomSpeed(10, 15);
+            this._horizontalSpeed = this.getRandomSpeed(this.minSpeed, this.maxSpeed);
         };
         Bullet.prototype.Reset = function () {
             managers.Shooting.isFired = true;
@@ -61,6 +67,10 @@ var objects;
         Bullet.prototype.getRandomSpeed = function (min, max) {
             var speed = (Math.floor(Math.random() * (max - min + 1)) + min) / 6;
             return speed;
+        };
+        Bullet.prototype.increseBulletspeed = function (arg0) {
+            this.minSpeed *= 2;
+            this.maxSpeed *= 2;
         };
         return Bullet;
     }(objects.GameObject));

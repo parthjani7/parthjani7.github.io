@@ -28,6 +28,7 @@ var objects;
         Scene.prototype.Destroy = function () {
         };
         Scene.prototype.backToMenu = function () {
+            createjs.Sound.volume = 1;
             Scene.stopBackgroundMusic();
             managers.Game.ScoreBoard.Reset();
             managers.Game.CurrentState = config.Scene.START;

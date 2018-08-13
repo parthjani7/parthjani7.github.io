@@ -35,6 +35,7 @@
         { id: "gun", src: "/Assets/audio/gunshots/gun.wav" },
         { id: "gun2", src: "/Assets/audio/gunshots/gun2.wav" },
         { id: "gun3", src: "/Assets/audio/gunshots/gun3.wav" },
+        { id: "hawk", src: "/Assets/audio/hawk.mp3" },
     ];
     function Init() {
         console.log("%c Assets Loading...", "font-weight:bold; font-size:20px; color: green;");

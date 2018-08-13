@@ -29,6 +29,7 @@ module objects {
 
         }
         public backToMenu():void{
+          createjs.Sound.volume = 1;
           Scene.stopBackgroundMusic();
           managers.Game.ScoreBoard.Reset();
           managers.Game.CurrentState = config.Scene.START;

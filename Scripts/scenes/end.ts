@@ -40,9 +40,6 @@ module scenes {
         }
 
         public Main():void {
-            if(Setting.getSound()){
-                Setting.playBackgroundMusic("menu_background");
-            }
             console.log("Started - END SCENE");
             this.addChild(this._background);
             this.addChild(this._endLabel);

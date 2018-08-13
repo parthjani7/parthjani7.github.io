@@ -23,6 +23,9 @@ module objects {
       //this._verticalSpeed = 1.2; // the tank will move down 5ppf
       this._horizontalSpeed = this.getRandomSpeed(10,15)/10; // the tank will move down 5ppf
       console.info(this._horizontalSpeed);
+      if(scenes.Setting.getSound()){
+        scenes.Setting.playBackgroundMusic("menu_background");
+      }
     }
 
     public Update():void {
@@ -31,7 +34,7 @@ module objects {
     }
 
     public Reset():void {
-      managers.Game.ScoreBoard.Score += 100;
+      managers.Game.ScoreBoard.increaseScore = 100;
       this._horizontalSpeed = this.getRandomSpeed(10,15)/10;
       this.x = config.Screen.WIDTH;
     }

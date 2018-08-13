@@ -37,9 +37,6 @@ var scenes;
             this.removeAllChildren();
         };
         End.prototype.Main = function () {
-            if (scenes.Setting.getSound()) {
-                scenes.Setting.playBackgroundMusic("menu_background");
-            }
             console.log("Started - END SCENE");
             this.addChild(this._background);
             this.addChild(this._endLabel);

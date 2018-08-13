@@ -1,10 +1,13 @@
 module objects {
   export class Bullet extends objects.GameObject {
+    
       // member variables
       private _horizontalSpeed:number;
       public isShooting=false;
       public targetX;
       public targetY;
+      public minSpeed=10;
+      public maxSpeed=15;
       public angle;
       // constructors
 
@@ -22,7 +25,10 @@ module objects {
       }
 
       public Start():void {
-        this._horizontalSpeed = this.getRandomSpeed(10,15);
+        // if(managers.Game.ScoreBoard.HighScore > 1000){
+        //   this.increseBulletspeed(2);
+        // }
+        this._horizontalSpeed = this.getRandomSpeed(this.minSpeed,this.maxSpeed);
       }
 
 
@@ -44,13 +50,14 @@ module objects {
         this.setTargetXY(x,y);
         this.isShooting=true;
         if(scenes.Setting.getSound())
+          createjs.Sound.volume = 0.02;
           createjs.Sound.play("gun");
       }
 
       public setCord(x,y):void {
         this.x =x;
         this.y =y;
-        this._horizontalSpeed = this.getRandomSpeed(10,15);
+        this._horizontalSpeed = this.getRandomSpeed(this.minSpeed,this.maxSpeed);
       }
 
       public Reset():void {
@@ -63,6 +70,11 @@ module objects {
       public getRandomSpeed(min,max){
         var speed=(Math.floor(Math.random() * (max - min + 1)) + min)/6;
         return speed;
+      }
+
+      public increseBulletspeed(arg0: any): any {
+        this.minSpeed*=2;
+        this.maxSpeed*=2;
       }
 
   }

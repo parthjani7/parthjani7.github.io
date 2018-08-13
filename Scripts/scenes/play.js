@@ -27,6 +27,9 @@ var scenes;
             //Backbutton
             this._backButton = new objects.Button("BackButton", config.Screen.WIDTH - 50, config.Screen.HEIGHT - config.Screen.HEIGHT + 50, true);
             this._pauseButton = new objects.Button("PauseButton", config.Screen.WIDTH - 120, config.Screen.HEIGHT - config.Screen.HEIGHT + 50, true);
+            if (scenes.Setting.getSound()) {
+                scenes.Setting.playBackgroundMusic("menu_background");
+            }
             // create an empty Array List-like object of clouds
             this._tanks = new Array();
             //Bullets
